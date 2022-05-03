@@ -13,6 +13,6 @@ maintainers:
     name: Ucraft
 name: rabbitmq
 sources:
-  - https://github.com/ucraft-com/helm-charts/tree/master/rebbitmq
+  - https://github.com/ucraft-com/helm-charts/tree/master/rabbitmq
   - https://www.rabbitmq.com
 version: 9.0.0
