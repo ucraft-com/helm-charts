@@ -1,0 +1,18 @@
+annotations:
+  category: Infrastructure
+apiVersion: v2
+appVersion: 3.9.16
+description: RabbitMQ is an open source general-purpose message broker that is designed for consistent, highly-available messaging scenarios (both synchronous and asynchronous).
+engine: gotpl
+keywords:
+  - rabbitmq
+  - message queue
+  - AMQP
+maintainers:
+  - email: mher.poghosyan@ucraft.com
+    name: Ucraft
+name: rabbitmq
+sources:
+  - https://github.com/ucraft-com/helm-charts/tree/master/rebbitmq
+  - https://www.rabbitmq.com
+version: 9.0.0
