@@ -7,7 +7,7 @@ nodeSelector: {}
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 
-fullnameOverride: "stage-rabbitmq"
+fullnameOverride: "prod-rabbitmq"
 ## @param namespaceOverride String to fully override common.names.namespace
 ##
 namespaceOverride: ""
