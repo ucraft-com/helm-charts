@@ -1,0 +1,17 @@
+{{- if and .Values.persistence.create -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "laravel.fullname" . }}
+#  namespace: {{ .Release.Namespace }}
+  labels: 
+    {{- include "laravel.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- range .Values.persistence.accessModes }}
+    - {{ . | quote }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.size | quote }}
+{{- end -}}
