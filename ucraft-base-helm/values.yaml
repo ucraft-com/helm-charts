@@ -1,0 +1,73 @@
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  tag: 1.21
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  enabled: true
+  name: http
+  type: NodePort
+  port: 80
+  protocol: TCP
+
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: host.name.com
+      paths:
+      - path: /*
+        backend:
+          serviceName: ssl-redirect
+          servicePort: use-annotation
+      - backend:
+          serviceName: uc-application
+          servicePort: 80
+        path: /*
+  tls: []
+
+resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config: {}
+
+containerPort: 80
+
+livenessProbe: {}
+
+readinessProbe: {}
+
+deployment: {}
+
+env: dev
+product: application
+
+secrets: {}

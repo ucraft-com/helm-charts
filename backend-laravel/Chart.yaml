@@ -1,0 +1,6 @@
+apiVersion: v2
+name: backend-laravel
+description: Helm chart for U applications.
+type: application
+version: 1.0.0
+appVersion: 8.0.0

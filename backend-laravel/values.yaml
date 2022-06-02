@@ -1,0 +1,234 @@
+replicaCount: 1
+
+strategy: {}
+
+nameOverride: ""
+fullnameOverride: ""
+imagePullSecrets: []
+env: {}
+app:
+  image:
+    repository: eu.gcr.io/uc-next/sso
+    pullPolicy: IfNotPresent
+    tag: "dev.backend-laravel.8.0.16-fpm-alpine3.15-2"
+
+  resources: {}
+  extraEnv: []
+  extraVolumeMounts: []
+  healthcheck:
+    enabled: true
+    period: 5
+  exporter:
+    enabled: false
+
+    image:
+      repository: hipages/php-fpm_exporter
+      pullPolicy: IfNotPresent
+      tag: "2.0.1"
+
+    resources: {}
+
+nginx:
+  image:
+    repository: nginx
+    pullPolicy: IfNotPresent
+    tag: "1.19"
+
+  resources: {}
+  extraVolumeMounts: []
+  healthcheck:
+    enabled: false
+    period: 5
+    path: /health
+
+  config: |
+    events {
+    }
+
+    http {
+      server {
+        listen 8080 default_server;
+        listen [::]:8080 default_server;
+
+        server_name stub_status;
+
+        location = /stub_status {
+          stub_status;
+        }
+      }
+
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html/public;
+        server_name _;
+
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Content-Type-Options "nosniff";
+
+        index index.php;
+
+        charset utf-8;
+
+        location / {
+          try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+        location = /robots.txt  { access_log off; log_not_found off; }
+
+        error_page 404 /index.php;
+
+        location ~ \.php$ {
+          include fastcgi_params;
+          fastcgi_param REQUEST_METHOD $request_method;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          fastcgi_pass 127.0.0.1:9000;
+        }
+
+        location ~ /\.(?!well-known).* {
+          deny all;
+        }
+      }
+    }
+
+  exporter:
+    enabled: false
+
+    image:
+      repository: nginx/nginx-prometheus-exporter
+      pullPolicy: IfNotPresent
+      tag: "0.9.0"
+
+    resources: {}
+persistence:
+  create: false
+  annotations:
+  accessModes:
+    - ReadWriteMany
+  size: 8Gi
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+rbac:
+  create: false
+  rules: []
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+service:
+  type: ClusterIP
+  port: 80
+
+  annotations: {}
+
+ingress:
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  # class: "nginx"
+  hosts:
+    - host: test.example.com
+      paths:
+        - /
+  tls: []
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+  behavior: {}
+  customMetrics: []
+
+pdb:
+  enabled: false
+  minAvailable: 1
+  # maxUnavailable: 25%
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+extraVolumes: []
+
+extraContainers: []
+
+extraInitContainers: []
+
+scheduler:
+  enabled: false
+
+  command:
+    - php
+    - artisan
+    - schedule:work
+
+  resources: {}
+  healthcheck:
+    enabled: true
+    period: 5
+
+phpFpmConf:
+
+  content: |
+    pm = static
+    pm.max_children = 5
+    pm.max_requests = 100
+    pm.status_path = /status
+    pm.status_listen = 127.0.0.1:9001
+
+phpIni:
+  content: |
+    opcache.enable=1
+    opcache.enable_cli=1
+    opcache.memory_consumption=128
+    opcache.interned_strings_buffer=128
+    opcache.max_accelerated_files=1000000
+    realpath_cache_size=8192K
+    realpath_cache_ttl=600
+    opcache.max_wasted_percentage=5
+    opcache.validate_timestamps=0
+    opcache.revalidate_freq=0
+    opcache.fast_shutdown=1
+    opcache.blacklist_filename=/etc/php-*/opcache*.blacklist
+    opcache.huge_code_pages=1
+    memory_limit = 128M
+    max_execution_time = 30
+
+    file_uploads = On
+    upload_max_filesize = 2M
+    max_file_uploads = 20
+    allow_url_fopen = On
+    allow_url_include = Off
+    session.save_handler = files
+    session.use_strict_mode = 0
+    session.use_cookies = 1
+    session.use_only_cookies = 1
+    session.name = PHPSESSID
+    session.auto_start = 0
+    session.cookie_lifetime = 0
+    session.cookie_path = /
+    session.cookie_domain =
+    session.cookie_httponly =
+    session.cookie_samesite =
+    session.serialize_handler = php
+    session.gc_probability = 1
+    session.gc_divisor = 1000
+    session.gc_maxlifetime = 1440
+    session.referer_check =
+    session.cache_limiter = nocache
+    session.cache_expire = 180
+    session.use_trans_sid = 0
+    session.sid_length = 26
+    session.trans_sid_tags = "a=href,area=href,frame=src,form="
+    session.sid_bits_per_character = 5
