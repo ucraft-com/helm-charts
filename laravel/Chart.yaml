@@ -1,6 +1,0 @@
-apiVersion: v2
-name: laravel
-description: Helm chart for Laravel applications.
-type: application
-version: 1.0.0
-appVersion: 8.0.0
