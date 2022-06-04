@@ -1,8 +1,8 @@
-{{- define "backend-laravel.name" -}}
+{{- define "laravel.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "backend-laravel.fullname" -}}
+{{- define "laravel.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -15,27 +15,27 @@
 {{- end }}
 {{- end }}
 
-{{- define "backend-laravel.chart" -}}
+{{- define "laravel.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "backend-laravel.labels" -}}
-helm.sh/chart: {{ include "backend-laravel.chart" . }}
-{{ include "backend-laravel.selectorLabels" . }}
+{{- define "laravel.labels" -}}
+helm.sh/chart: {{ include "laravel.chart" . }}
+{{ include "laravel.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
-{{- define "backend-laravel.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "backend-laravel.name" . }}
+{{- define "laravel.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "laravel.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "backend-laravel.serviceAccountName" -}}
+{{- define "laravel.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "backend-laravel.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "laravel.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

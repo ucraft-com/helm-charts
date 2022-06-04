@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "backend-laravel.fullname" . }}
+  name: {{ include "laravel.fullname" . }}
   labels:
-    {{- include "backend-laravel.labels" . | nindent 4 }}
+    {{- include "laravel.labels" . | nindent 4 }}
   annotations:
     {{- with .Values.service.annotations }}
     {{- toYaml . | nindent 4 }}
@@ -12,9 +12,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 80
+      targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "backend-laravel.selectorLabels" . | nindent 4 }}
-    backend-laravel.com/pod-type: web
+    {{- include "laravel.selectorLabels" . | nindent 4 }}
+    laravel.com/pod-type: web
