@@ -1,4 +1,4 @@
-{{- if not .Values.app.envSecretName }}
+{{- if not .Values.nginx.configName }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
