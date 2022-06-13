@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  ucraft-base-helm:
+  - apiVersion: v2
+    appVersion: 0.1.10
+    created: "2022-06-13T12:22:08.111404352Z"
+    description: A ucraft-base-helm Helm chart for Kubernetes
+    digest: ca7ffceb516529f1e6b2ae0ae45f4505627181e44f2ca18915d28fbc112ffd01
+    name: ucraft-base-helm
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
+    version: 0.1.12
+generated: "2022-06-13T12:22:08.111411652Z"
