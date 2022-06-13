@@ -1,0 +1,6 @@
+apiVersion: v2
+name: RabbitMQ
+description: Helm chart scaffolding for RabbitMQ applications.
+type: Infrastructure
+version: 3.5.0
+appVersion: 1.0.0
