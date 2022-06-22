@@ -24,6 +24,16 @@ entries:
   frontend:
   - apiVersion: v2
     appVersion: 0.3.10
+    created: "2022-06-22T23:24:38.906878725Z"
+    description: A frontend Helm chart for Kubernetes
+    digest: 9f73f9bb5adf545ff18abc186124ad9e841d096071bf17c0d77d942afed28b5c
+    name: frontend
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/frontend-1.5.13/frontend-1.5.13.tgz
+    version: 1.5.13
+  - apiVersion: v2
+    appVersion: 0.3.10
     created: "2022-06-22T23:20:34.031091038Z"
     description: A frontend Helm chart for Kubernetes
     digest: be92e9a1feda273ba38d53112053337be60ccec87efe9832fd29cd0f261e035b
@@ -154,4 +164,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2022-06-22T23:20:34.031134239Z"
+generated: "2022-06-22T23:24:38.906936925Z"
