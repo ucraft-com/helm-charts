@@ -86,12 +86,12 @@ spec:
               mountPath: {{ if .Values.secretenv.envpath }} {{ .Values.secretenv.envpath }}env {{ else }} .env {{ end }}
               subPath: .env
             {{- end }}
-            {{- if .Values.deployment.volumes.extVolume }}
-            {{- range $index, $element := .Values.deployment.volumes.extVolume }}
-            - name: {{ coalesce $element.name (add $index 1) }}
-              mountPath: {{ $element.mountPath }}
-            {{- end }}
-            {{- end }}
+            # {{- if .Values.deployment.volumes.extVolume }}
+            # {{- range $index, $element := .Values.deployment.volumes.extVolume }}
+            # - name: {{ coalesce $element.name (add $index 1) }}
+            #   mountPath: {{ $element.mountPath }}
+            # {{- end }}
+            # {{- end }}
           {{- end }}
       {{- if .Values.deployment.volumes.enabled }}
       volumes:
@@ -100,13 +100,13 @@ spec:
           secret:
             secretName: {{ if .Values.app.envSecretName }} {{ .Values.app.envSecretName }} {{ else }} {{ .Release.Name }}-env {{ end }}
         {{ end }}
-        {{- if .Values.deployment.volumes.extVolume }}
-        {{- range $index, $element := .Values.deployment.volumes.extVolume }}
-        - name: {{ coalesce $element.name (add $index 1) }}
-          persistentVolumeClaim:
-            claimName: {{ $element.persistentVolumeClaim.claimName }}
-      {{- end }}
-      {{- end }}
+      #   {{- if .Values.deployment.volumes.extVolume }}
+      #   {{- range $index, $element := .Values.deployment.volumes.extVolume }}
+      #   - name: {{ coalesce $element.name (add $index 1) }}
+      #     persistentVolumeClaim:
+      #       claimName: {{ $element.persistentVolumeClaim.claimName }}
+      # {{- end }}
+      # {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
