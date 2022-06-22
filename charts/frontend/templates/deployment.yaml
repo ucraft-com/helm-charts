@@ -81,9 +81,9 @@ spec:
                 optional: true
           {{- if .Values.deployment.volumes.enabled }}
           volumeMounts:
-            {{- if .Values.secret-env.enabled }}
+            {{- if .Values.secretenv.enabled }}
             - name: env
-              mountPath: {{ if .Values.secret-env.envpath }} {{ .Values.secret-env.envpath }}env {{ else }} .env {{ end }}
+              mountPath: {{ if .Values.secretenv.envpath }} {{ .Values.secretenv.envpath }}env {{ else }} .env {{ end }}
               subPath: .env
             {{- end }}
             {{- if .Values.deployment.volumes.extVolume }}
@@ -95,7 +95,7 @@ spec:
           {{- end }}
       {{- if .Values.deployment.volumes.enabled }}
       volumes:
-        {{- if .Values.secret-env.enabled }}
+        {{- if .Values.secretenv.enabled }}
         - name: env
           secret:
             secretName: {{ if .Values.app.envSecretName }} {{ .Values.app.envSecretName }} {{ else }} {{ .Release.Name }}-env {{ end }}

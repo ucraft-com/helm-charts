@@ -72,7 +72,7 @@ readinessProbe: {}
 
 external-secrets: {}
 
-secret-env:
+secretenv:
   enabled: false
   env: |
     APP_ENV=dev
