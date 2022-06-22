@@ -23,7 +23,7 @@ securityContext: {}
 service:
   enabled: true
   name: http
-  type: NodePort
+  type: ClusterIP
   port: 80
   protocol: TCP
 
