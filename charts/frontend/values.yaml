@@ -68,7 +68,7 @@ containerPort: 80
 livenessProbe: {}
 
 readinessProbe: {}
-
+envSecretName: {}
 
 externalsecrets: {}
 
