@@ -153,6 +153,29 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/laravel-ucraft-backend-3.0.4/laravel-ucraft-backend-3.0.4.tgz
     version: 3.0.4
+  mysqldump:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2022-06-24T20:24:09.59748275Z"
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: ad6331b359167e758e127c59a37ddd122c5285d541af9c4295271e8033085836
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: mher.poghosyan@ucraft.com
+      name: mher
+    name: mysqldump
+    sources:
+    - https://github.com/ucraft-com/helm-charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/mysqldump-5.0.0/mysqldump-5.0.0.tgz
+    version: 5.0.0
   ucraft-base-helm:
   - apiVersion: v2
     appVersion: 0.1.10
@@ -174,4 +197,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2022-06-22T23:35:47.869046208Z"
+generated: "2022-06-24T20:24:09.597521552Z"
