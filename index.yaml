@@ -156,6 +156,28 @@ entries:
   mysqldump:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2022-06-24T22:03:15.662644285Z"
+    description: A Helm chart to help backup MySQL databases using mysqldump
+    digest: 6557eb91f2a715ce7500941ded198698d370b5eea15a6d288ec96ad31a2f188a
+    home: https://www.mysql.com/
+    icon: https://www.mysql.com/common/logos/logo-mysql-170x115.png
+    keywords:
+    - mysql
+    - mysqldump
+    - backup
+    maintainers:
+    - email: mher.poghosyan@ucraft.com
+      name: mher
+    name: mysqldump
+    sources:
+    - https://github.com/ucraft-com/helm-charts
+    - https://dev.mysql.com/doc/refman/5.7/en/mysqldump.html
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/mysqldump-5.1.0/mysqldump-5.1.0.tgz
+    version: 5.1.0
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2022-06-24T20:24:09.59748275Z"
     description: A Helm chart to help backup MySQL databases using mysqldump
     digest: ad6331b359167e758e127c59a37ddd122c5285d541af9c4295271e8033085836
@@ -197,4 +219,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2022-06-24T20:24:09.597521552Z"
+generated: "2022-06-24T22:03:15.662682684Z"
