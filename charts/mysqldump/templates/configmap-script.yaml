@@ -69,9 +69,9 @@ data:
     {{ end -}}
 
     {{ if .Values.upload.googlestoragebucket.enabled -}}
-    echo "upload files to google storage bucket {{ .Values.upload.googlestoragebucket.bucketname }}"
     gcloud auth activate-service-account --key-file {{ .Values.sshMountpath }}/gcloud/{{ .Values.upload.googlestoragebucket.secretFileName }}
-    
+    echo "upload files to google storage"
+
     mkdir ${BACKUP_DIR}/${TIMESTAMP}
     cp -r ${BACKUP_DIR}/ ${BACKUP_DIR}/${TIMESTAMP}
     gsutil cp -r ${BACKUP_DIR}/${TIMESTAMP} {{ .Values.upload.googlestoragebucket.bucketname }}
