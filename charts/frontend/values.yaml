@@ -22,7 +22,8 @@ securityContext: {}
 
 deployment:
   volumes:
-    enabled: true
+    enabled: false
+  extraVolumeMounts: []
 
 service:
   enabled: true
@@ -48,6 +49,7 @@ ingress:
   tls: []
 
 resources: {}
+extraVolumes: []
 autoscaling:
   enabled: false
   minReplicas: 1
