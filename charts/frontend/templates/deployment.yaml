@@ -164,6 +164,11 @@ spec:
         {{- end }}
       {{- if .Values.deployment.volumes.enabled }}
       volumes:
+        {{- if .Values.nginx.enabled }}
+        - name: nginx-config
+          configMap:
+            name: {{ if .Values.nginx.configName }} {{ .Values.nginx.configName }} {{ else }} {{ .Release.Name }}-nginx-config {{ end }}
+        {{ end }}
         {{- if .Values.secretenv.enabled }}
         - name: env
           secret:
