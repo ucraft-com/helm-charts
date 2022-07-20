@@ -112,7 +112,7 @@ spec:
                 command:
                   - /bin/sh
                   - -c
-                #  - cd /var/www/html && sh deploy.sh
+                 - cd /var/www/html && sh deploy.sh
                 #  - cp /tmp/.env /var/www/html/.env && cp -r /var/www/html/. /app && cd /var/www/html && sh deploy.sh
         {{- if .Values.scheduler.enabled }}
         - name: scheduler
