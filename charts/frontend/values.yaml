@@ -21,6 +21,7 @@ podSecurityContext: {}
 securityContext: {}
 
 deployment:
+  containerPort: {}
   volumes:
     enabled: false
   extraVolumeMounts: []

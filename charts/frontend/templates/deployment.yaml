@@ -61,7 +61,7 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.containerPort | default 80 }}
+              containerPort: {{ .Values.deployment.containerPort | default 80 }}
               protocol: TCP
           {{- if .Values.livenessProbe }}
           livenessProbe:
@@ -106,10 +106,7 @@ spec:
             {{- end }}
           ports:
             - name: http
-              containerPort: 80
-              protocol: TCP
-            - name: http2
-              containerPort: 8080
+              containerPort: {{ .Values.containerPort | default 80 }}
               protocol: TCP
           {{- if .Values.nginx.healthcheck.enabled }}
           readinessProbe:
