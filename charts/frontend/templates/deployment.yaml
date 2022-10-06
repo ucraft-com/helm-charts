@@ -81,10 +81,10 @@ spec:
                 optional: true
           {{- if .Values.deployment.volumes.enabled }}
           volumeMounts:
-            {{- if .Values.secretenv.enabled }}
+            {{- if .Values.externalsecrets.enabled }}
             - name: env
-              mountPath: {{ if .Values.secretenv.envpath }} {{ .Values.secretenv.envpath }}.env {{ else }} .env {{ end }}
-              subPath: .env
+              mountPath: {{ if .Values.externalsecrets.envpath }} {{ .Values.externalsecrets.envpath }}/{{ .Values.externalsecrets.secretkey -}} {{ else }} .env {{ end }}
+              # subPath: {{ .Values.externalsecrets.secretkey -}}
             {{- end }}
             {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
@@ -168,7 +168,7 @@ spec:
           configMap:
             name: {{ if .Values.nginx.configName }} {{ .Values.nginx.configName }} {{ else }} {{ .Release.Name }}-nginx-config {{ end }}
         {{ end }}
-        {{- if .Values.secretenv.enabled }}
+        {{- if .Values.externalsecrets.enabled }}
         - name: env
           secret:
             secretName: {{ if .Values.envSecretName }} {{ .Values.envSecretName }} {{ else }} {{ .Release.Name }}-env {{ end }}
