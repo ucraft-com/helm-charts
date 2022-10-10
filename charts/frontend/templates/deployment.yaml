@@ -83,8 +83,8 @@ spec:
           volumeMounts:
             {{- if .Values.externalsecrets.enabled }}
             - name: env
-              mountPath: {{ if .Values.externalsecrets.envpath }} {{ .Values.externalsecrets.envpath }}/{{ .Values.externalsecrets.secretkey -}} {{ else }} .env {{ end }}
-              # subPath: {{ .Values.externalsecrets.secretkey -}}
+              mountPath: {{ if .Values.externalsecrets.envpath }} {{ .Values.externalsecrets.envpath }}/{{ .Values.externalsecrets.secretkey }} {{ else }} .env {{ end }}
+              subPath: {{ .Values.externalsecrets.secretkey }}
             {{- end }}
             {{- with .Values.deployment.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
