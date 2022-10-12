@@ -256,40 +256,11 @@ phpIni:
     session.sid_bits_per_character = 5
 
 secret:
+  enable: false
   env: |
-    APP_NAME=Ucraft
     APP_ENV=dev
-    APP_KEY=base64:GBUzTt++=
-    APP_DEBUG=true
-    LOG_CHANNEL=stack
-    CLOCKWORK_ENABLE=true
-    BROADCAST_DRIVER=log
-    CACHE_DRIVER=file
-    QUEUE_CONNECTION=sync
-    SESSION_DRIVER=database
-    SESSION_LIFETIME=120
-    REDIS_HOST=127.0.0.1
-    REDIS_PASSWORD=null
-    REDIS_PORT=6379
-    MAIL_MAILER=smtp
-    MAIL_DRIVER=smtp
-    MAIL_HOST=smtp.mandrillapp.com
-    MAIL_PORT=587
-    MAIL_USERNAME=Ucraft
-    MAIL_PASSWORD=
-    MAIL_ENCRYPTION=
-    MAILJET_APIKEY=
-    MAILJET_APISECRET=
-    TRUSTPILOT_EMAIL=c
-    MAIL_FROM_ADDRESS=support@ucraft.com
-    MAIL_FROM_NAME=Ucraft
-    AWS_ACCESS_KEY_ID=
-    AWS_SECRET_ACCESS_KEY=
-    AWS_DEFAULT_REGION=us-east-1
-    AWS_BUCKET=
-    PUSHER_APP_ID=
-    PUSHER_APP_KEY=
-    PUSHER_APP_SECRET=
-    PUSHER_APP_CLUSTER=mt1
-    MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
-    MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+    
+externalsecrets: 
+  enabled: true
+  secretkey: .env
+  interval: 168h
