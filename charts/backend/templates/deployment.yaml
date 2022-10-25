@@ -73,7 +73,7 @@ spec:
             - name: app
               mountPath: /app
             - name: env
-              mountPath: /tmp/.env
+              mountPath: {{ .Values.externalsecrets.envpath }}/{{ .Values.externalsecrets.secretkey }}
               subPath: .env
             - name: php-ini-config
               mountPath: /usr/local/etc/php/php.ini
