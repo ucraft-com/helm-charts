@@ -262,6 +262,7 @@ secret:
     
 externalsecrets: 
   enabled: true
+  envpath: /tmp
   secretkey: .env
   interval: 168h
   updatedata: 18-10-2022
