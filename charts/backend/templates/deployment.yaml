@@ -211,7 +211,7 @@ spec:
             {{- toYaml .Values.nginx.resources | nindent 12 }}
         {{- if .Values.blackfire.enabled }}
         - name: blackfire
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.blackfire.image.repository }}:{{ .Values.blackfire.image.tag }}"
           imagePullPolicy: {{ .Values.blackfire.image.pullPolicy }}
           env:
             - name: BLACKFIRE_DISABLE_LEGACY_PORT
