@@ -41,6 +41,11 @@ spec:
         - name: php-fpm-config
           configMap:
             name: {{ if .Values.phpFpmConf.configName }} {{ .Values.phpFpmConf.configName }} {{ else }} {{ .Release.Name }}-php-fpm-config {{ end }}
+        {{- if .Values.blackfire.enabled }}
+        - name: blackfire-config
+          configMap:
+            name: {{ if .Values.blackfire.configName }} {{ .Values.blackfire.configName }} {{ else }} {{ .Release.Name }}-blackfire-config {{ end }}
+        {{- end }}         
         {{- with .Values.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -82,7 +87,7 @@ spec:
               mountPath: /usr/local/etc/php-fpm.d/laravel.conf
               subPath: laravel.conf
             {{- if .Values.blackfire.enabled }}
-            - name: blackfire
+            - name: blackfire-config
               mountPath: /usr/local/etc/php/conf.d/blackfire.ini
               subPath: blackfire.ini
             {{- end }}
@@ -134,11 +139,6 @@ spec:
             - name: php-ini-config
               mountPath: /usr/local/etc/php/php.ini
               subPath: php.ini
-            {{- if .Values.blackfire.enabled }}
-            - name: blackfire
-              mountPath: /usr/local/etc/php/conf.d/blackfire.ini
-              subPath: blackfire.ini
-            {{- end }}
             {{- with .Values.app.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

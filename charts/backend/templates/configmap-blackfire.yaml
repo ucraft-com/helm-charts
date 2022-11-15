@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-blackfire
+  name: {{ .Release.Name }}-blackfire-config
 data:
   blackfire.ini: |
 {{- tpl .Values.blackfire.config . | nindent 4 }}
