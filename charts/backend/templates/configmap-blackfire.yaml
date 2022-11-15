@@ -1,0 +1,9 @@
+{{- if .Values.blackfire.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-blackfire
+data:
+  blackfire.ini: |
+{{- tpl .Values.blackfire.config . | nindent 4 }}
+{{- end }}

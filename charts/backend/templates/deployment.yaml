@@ -81,6 +81,11 @@ spec:
             - name: php-fpm-config
               mountPath: /usr/local/etc/php-fpm.d/laravel.conf
               subPath: laravel.conf
+            {{- if .Values.blackfire.enabled }}
+            - name: blackfire
+              mountPath: /usr/local/etc/php/conf.d/blackfire.ini
+              subPath: blackfire.ini
+            {{- end }}
             {{- with .Values.app.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -129,6 +134,11 @@ spec:
             - name: php-ini-config
               mountPath: /usr/local/etc/php/php.ini
               subPath: php.ini
+            {{- if .Values.blackfire.enabled }}
+            - name: blackfire
+              mountPath: /usr/local/etc/php/conf.d/blackfire.ini
+              subPath: blackfire.ini
+            {{- end }}
             {{- with .Values.app.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
