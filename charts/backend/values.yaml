@@ -256,12 +256,12 @@ phpIni:
     session.sid_bits_per_character = 5
 
 secret:
-  enable: false
+  enabled: false
   env: |
     APP_ENV=dev
 
 blackfire:
-  enable: false
+  enabled: false
   config: |
     extension=blackfire.so
     blackfire.agent_socket=tcp://localhost:8307
