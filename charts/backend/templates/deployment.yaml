@@ -178,8 +178,8 @@ spec:
           image: "{{ .Values.nginx.image.repository }}:{{ .Values.nginx.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.nginx.image.pullPolicy }}
           volumeMounts:
-            - name: app
-              mountPath: /var/www/html
+#             - name: app
+#               mountPath: /var/www/html
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
