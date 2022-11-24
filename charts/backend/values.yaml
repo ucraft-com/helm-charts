@@ -261,10 +261,9 @@ secret:
     APP_ENV=dev
 
 blackfire:
-  enabled: false
+  enabled: true
   config: |
-    extension=blackfire.so
-    blackfire.agent_socket=tcp://localhost:8307
+    blackfire.agent_socket=tcp://blackfire:8307
 
     
 externalsecrets: 
