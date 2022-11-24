@@ -263,7 +263,8 @@ secret:
 blackfire:
   enabled: true
   config: |
-    blackfire.agent_socket=tcp://blackfire:8307
+    ; extension=blackfire.so
+    ; blackfire.agent_socket=tcp://blackfire:8307
 
     
 externalsecrets: 
