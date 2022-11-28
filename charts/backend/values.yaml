@@ -269,6 +269,7 @@ blackfire:
     
 externalsecrets: 
   enabled: true
+  migration: false
   envpath: /tmp
   secretkey: .env
   interval: 168h
