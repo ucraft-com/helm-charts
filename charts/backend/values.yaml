@@ -266,10 +266,14 @@ blackfire:
     ; extension=blackfire.so
     ; blackfire.agent_socket=tcp://blackfire:8307
 
-    
+
+
 externalsecrets: 
   enabled: true
   envpath: /tmp
   secretkey: .env
-  interval: 168h
+  interval: 0m
   updatedata: 18-10-2022
+  env: 
+  - DB_HOST
+  - DB_USERNAME
