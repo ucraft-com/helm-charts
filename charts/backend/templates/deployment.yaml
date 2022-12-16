@@ -84,8 +84,8 @@ spec:
               mountPath: /usr/local/etc/php/php.ini
               subPath: php.ini
             - name: php-fpm-config
-              mountPath: /usr/local/etc/php/conf.d/laravel.conf
-              subPath: laravel.conf
+              mountPath: /usr/local/etc/php-fpm.d/www.conf
+              subPath: www.conf
             {{- if .Values.blackfire.enabled }}
             - name: blackfire-config
               mountPath: /usr/local/etc/php/conf.d/blackfire.ini
