@@ -4,6 +4,6 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-php-fpm-config
 data:
-  laravel.conf: |
+  www.conf: |
 {{- tpl .Values.phpFpmConf.content . | nindent 4 }}
 {{- end }}
