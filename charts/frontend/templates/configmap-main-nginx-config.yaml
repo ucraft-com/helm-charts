@@ -1,0 +1,9 @@
+# {{- if .Values.firstnginx.enabled }}
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: {{ .Release.Name }}-firstnginx-config
+# data:
+#   nginx.conf: |
+# {{- tpl .Values.firstnginx.config . | nindent 4 }}
+# {{- end }}
