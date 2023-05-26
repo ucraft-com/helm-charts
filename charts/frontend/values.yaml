@@ -15,8 +15,7 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
-# firstnginx:
-#   enabled: false
+
 podSecurityContext: {}
 
 securityContext: {}
