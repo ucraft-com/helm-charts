@@ -3,6 +3,16 @@ entries:
   backend:
   - apiVersion: v2
     appVersion: 1.3.0
+    created: "2023-05-30T10:15:36.817579654Z"
+    description: Helm chart scaffolding for Backend applications.
+    digest: 7d7b1a2143d6b9f7a8acadc33826f0e0ddbde5690d518cee5b8ee1edee7dfef0
+    name: backend
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/backend-3.6.2/backend-3.6.2.tgz
+    version: 3.6.2
+  - apiVersion: v2
+    appVersion: 1.3.0
     created: "2023-05-30T07:58:15.448240731Z"
     description: Helm chart scaffolding for Backend applications.
     digest: 645aae1bc12e2bb9972ee9b07a85873982b6ba87dc260cbb0ee7b22a1e4f545f
@@ -332,6 +342,16 @@ entries:
     - https://github.com/ucraft-com/helm-charts/releases/download/backend-3.0.5/backend-3.0.5.tgz
     version: 3.0.5
   frontend:
+  - apiVersion: v2
+    appVersion: 0.3.10
+    created: "2023-05-30T10:15:36.935746287Z"
+    description: A frontend Helm chart for Kubernetes
+    digest: a1fc49f3aff98eeba360dcce041470f17761f21a5f4000486d82b6bf6abe6362
+    name: frontend
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/frontend-3.6.2/frontend-3.6.2.tgz
+    version: 3.6.2
   - apiVersion: v2
     appVersion: 0.3.10
     created: "2023-05-26T20:48:35.400132424Z"
@@ -699,4 +719,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2023-05-30T07:58:15.448734233Z"
+generated: "2023-05-30T10:15:36.936491888Z"
