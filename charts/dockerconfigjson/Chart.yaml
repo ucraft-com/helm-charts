@@ -1,0 +1,5 @@
+apiVersion: v2
+description: A helm chart to configure a secret for pulling a container image from
+  a private repository
+name: dockerconfigjson
+version: 0.1.0

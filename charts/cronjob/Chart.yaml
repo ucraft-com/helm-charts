@@ -1,0 +1,14 @@
+apiVersion: v2
+dependencies:
+- name: dockerconfigjson
+  repository: https://ucraft-com.github.io/helm-charts/helm-charts
+  version: 0.1.0
+- name: cloudserviceaccount
+  repository: https://ucraft-com.github.io/helm-charts/helm-charts
+  version: 0.1.0
+description: A Helm Chart to deploy an arbitrary container as a cron job.
+name: cron-job
+sources:
+- https://github.com/snowplow-devops/helm-charts
+version: 1.5.0
+type: application

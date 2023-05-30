@@ -1,0 +1,4 @@
+apiVersion: v2
+description: A helm chart which can create a ServiceAccount with cloud specific bindings
+name: cloudserviceaccount
+version: 0.1.0
