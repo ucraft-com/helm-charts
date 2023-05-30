@@ -279,12 +279,13 @@ externalsecrets:
   - DB_USERNAME
 
 cronjob:
-  schedule: "*/1 * * * *"
+  enabled: false
+  schedule: "* * * * *"
   concurrencyPolicy: "Forbid"
   restartPolicy: "Never"
-  failedJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 10
   successfulJobsHistoryLimit: 1
-
+  nodeSelector: {}
   image:
     repository: "busybox"
     tag: "latest"

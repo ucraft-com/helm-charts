@@ -1,3 +1,4 @@
+{{- if .Values.cronjob.enabled }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -48,7 +49,10 @@ spec:
             name: {{ $v.name }}
           {{- end }}
           {{- end }}
-
+          {{- with .Values.cronjob.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
           containers:
           - name: "{{ include "laravel.fullname" . }}"
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag }}"
@@ -94,3 +98,4 @@ spec:
               name: {{ $v.name }}
             {{- end }}
             {{- end }}
+{{- end }}
