@@ -341,6 +341,43 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/backend-3.0.5/backend-3.0.5.tgz
     version: 3.0.5
+  cloudserviceaccount:
+  - apiVersion: v2
+    appVersion: 0.3.10
+    created: "2023-05-30T14:43:27.735414321Z"
+    description: A helm chart which can create a ServiceAccount with cloud specific
+      bindings
+    digest: 4724be04fb9e2cab71536d955c57081c860229a33bd56b7955a05201d0098ff7
+    name: cloudserviceaccount
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/cloudserviceaccount-0.1.1/cloudserviceaccount-0.1.1.tgz
+    version: 0.1.1
+  cron-job:
+  - apiVersion: v2
+    appVersion: 0.3.10
+    created: "2023-05-30T14:43:27.939561941Z"
+    description: A Helm Chart to deploy an arbitrary container as a cron job.
+    digest: 97d85431510d98e2a24a530f1b29aa495391056663f71e676b7501dd791091dc
+    name: cron-job
+    sources:
+    - https://github.com/snowplow-devops/helm-charts
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/cron-job-1.5.2/cron-job-1.5.2.tgz
+    version: 1.5.2
+  dockerconfigjson:
+  - apiVersion: v2
+    appVersion: 0.3.10
+    created: "2023-05-30T14:43:28.151882747Z"
+    description: A helm chart to configure a secret for pulling a container image
+      from a private repository
+    digest: 551b3d4c84b9d93a8eb80878367185b827e39a73ba37f824c45fc10c86df4551
+    name: dockerconfigjson
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/dockerconfigjson-0.1.1/dockerconfigjson-0.1.1.tgz
+    version: 0.1.1
   frontend:
   - apiVersion: v2
     appVersion: 0.3.10
@@ -719,4 +756,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2023-05-30T10:15:36.936491888Z"
+generated: "2023-05-30T14:43:28.152495098Z"
