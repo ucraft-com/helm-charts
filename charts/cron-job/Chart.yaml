@@ -10,6 +10,6 @@ description: A Helm Chart to deploy an arbitrary container as a cron job.
 name: cron-job
 sources:
 - https://github.com/snowplow-devops/helm-charts
-version: 1.5.0
+version: 1.5.1
 type: application
 appVersion: "0.3.10"
