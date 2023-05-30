@@ -1,0 +1,3 @@
+{{- if .Values.extraDeploy.enabled -}}
+{{- tpl .Values.extraDeploy.yaml . | nindent 0 }}
+{{- end }}

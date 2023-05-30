@@ -267,7 +267,6 @@ blackfire:
     ; blackfire.agent_socket=tcp://blackfire:8307
 
 
-
 externalsecrets: 
   enabled: true
   envpath: /tmp
@@ -277,6 +276,21 @@ externalsecrets:
   env: 
   - DB_HOST
   - DB_USERNAME
+
+extraDeploy:
+  enabled: false
+  yaml: |
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
 
 cronjob:
   enabled: false
