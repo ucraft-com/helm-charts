@@ -356,6 +356,25 @@ entries:
   cron-job:
   - apiVersion: v2
     appVersion: 0.3.10
+    created: "2023-05-30T14:54:35.473224576Z"
+    dependencies:
+    - name: dockerconfigjson
+      repository: https://ucraft-com.github.io/helm-charts
+      version: 0.1.1
+    - name: cloudserviceaccount
+      repository: https://ucraft-com.github.io/helm-charts
+      version: 0.1.1
+    description: A Helm Chart to deploy an arbitrary container as a cron job.
+    digest: 8348ca3366dcab5f0ced43dc5d6ef54d220d42ae38f95303520984de35d66c54
+    name: cron-job
+    sources:
+    - https://ucraft-com.github.io/helm-charts
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/cron-job-1.5.4/cron-job-1.5.4.tgz
+    version: 1.5.4
+  - apiVersion: v2
+    appVersion: 0.3.10
     created: "2023-05-30T14:43:27.939561941Z"
     description: A Helm Chart to deploy an arbitrary container as a cron job.
     digest: 97d85431510d98e2a24a530f1b29aa495391056663f71e676b7501dd791091dc
@@ -756,4 +775,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2023-05-30T14:43:28.152495098Z"
+generated: "2023-05-30T14:54:35.473977414Z"
