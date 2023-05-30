@@ -1,0 +1,96 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "laravel.fullname" . }}
+spec:
+  schedule: "{{ .Values.cronjob.schedule }}"
+  concurrencyPolicy: "{{ .Values.cronjob.concurrencyPolicy }}"
+  failedJobsHistoryLimit: {{ .Values.cronjob.failedJobsHistoryLimit }}
+  successfulJobsHistoryLimit: {{ .Values.cronjob.successfulJobsHistoryLimit }}
+
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ include "laravel.fullname" . }}
+          annotations:
+            {{- if .Values.cronjob.configMaps }}
+            {{- range $v := .Values.cronjob.configMaps }}
+            {{- range $f := $v.files }}
+            {{- if $f.contentsB64 }}
+            checksum/{{ $v.name }}-{{ $f.key }}: "{{ $f.contentsB64 | sha256sum }}"
+            {{- else }}
+            checksum/{{ $v.name }}-{{ $f.key }}: "{{ ($.Files.Get $f.contentsFile) | b64enc | sha256sum }}"
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
+        spec:
+          {{- if .Values.cronjob.cloudserviceaccount.deploy }}
+          serviceAccountName: {{ .Values.cronjob.cloudserviceaccount.name }}
+          {{- end }}
+          automountServiceAccountToken: true
+
+          {{- if not .Values.cronjob.image.isRepositoryPublic }}
+          imagePullSecrets:
+          - name: {{ .Values.cronjob.dockerconfigjson.name }}
+          {{- end }}
+
+          restartPolicy: "{{ .Values.cronjob.restartPolicy }}"
+
+          {{- if .Values.cronjob.configMaps }}
+          volumes:
+          {{- range $v := .Values.cronjob.configMaps }}
+          - configMap:
+              name: {{ $v.name }}
+              optional: false
+            name: {{ $v.name }}
+          {{- end }}
+          {{- end }}
+
+          containers:
+          - name: "{{ include "laravel.fullname" . }}"
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag }}"
+            imagePullPolicy: {{ default "IfNotPresent" .Values.cronjob.image.pullPolicy }}
+
+            {{- if .Values.cronjob.config.command  }}
+            command:
+            {{- range $v := .Values.cronjob.config.command }}
+            - "{{ $v }}"
+            {{- end }}
+            {{- end }}
+
+            {{- if .Values.cronjob.config.args  }}
+            args:
+            {{- range $v := .Values.cronjob.config.args }}
+            - "{{ $v }}"
+            {{- end }}
+            {{- end }}
+
+            {{- if .Values.cronjob.config.env  }}
+            env:
+            {{- range $k, $v := .Values.cronjob.config.env }}
+            - name: "{{ $k }}"
+              value: "{{ $v }}"
+            {{- end }}
+            {{- end }}
+            
+            {{- if .Values.cronjob.config.secrets  }}
+            envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-cronjob-secret
+            {{- end }}
+
+            {{- if .Values.cronjob.configMaps }}
+            volumeMounts:
+            {{- range $v := .Values.cronjob.configMaps }}
+            - mountPath: "{{ $v.mountPath }}"
+              {{- if $v.mountPropagation }}
+              mountPropagation: {{ $v.mountPropagation }}
+              {{- else }}
+              mountPropagation: None
+              {{- end }}
+              name: {{ $v.name }}
+            {{- end }}
+            {{- end }}

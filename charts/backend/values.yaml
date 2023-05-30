@@ -277,3 +277,67 @@ externalsecrets:
   env: 
   - DB_HOST
   - DB_USERNAME
+
+cronjob:
+  schedule: "*/1 * * * *"
+  concurrencyPolicy: "Forbid"
+  restartPolicy: "Never"
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+
+  image:
+    repository: "busybox"
+    tag: "latest"
+    # -- Whether the repository is public
+    isRepositoryPublic: true
+    # -- The image pullPolicy to use
+    pullPolicy: "IfNotPresent"
+
+  config:
+    command: []
+    #  - "/bin/sh"
+    args: []
+    #  - "-c"
+    #  - "echo 'Environment $(hello_env)! Secret $(username).'"
+
+    # -- Map of environment variables to use within the job
+    env: {}
+    #  hello_env: "world"
+
+    # -- Map of secrets that will be exposed as environment variables within the job
+    secrets: {}
+    #  username: "password"
+
+  # -- List of config maps to mount to the deployment
+  configMaps: []
+  #  - name: "volume-1"
+  #    mountPath: "/etc/config" # Must be unique
+  #    mountPropagation: None # If unset will default to 'None'
+  #    files: []
+  #      - key: "file.cfg" # Key must be unique for each file
+  #        contentsB64: "" # The file contents which have already been base-64 encoded
+  #        contentsFile: "" # The path to a local file (note: contentsB64 will take precedence if not-empty)
+
+  dockerconfigjson:
+    # -- Name of the secret to use for the private repository
+    name: "snowplow-cron-job-dockerhub"
+    # -- Username for the private repository
+    username: ""
+    # -- Password for the private repository
+    password: ""
+    # -- Repository server URL
+    server: "https://index.docker.io/v1/"
+    # -- Email address for user of the private repository
+    email: ""
+
+  cloudserviceaccount:
+    # -- Whether to create a service-account
+    deploy: false
+    # -- Name of the service-account to create
+    name: "snowplow-cron-job-service-account"
+    aws:
+      # -- IAM Role ARN to bind to the k8s service account
+      roleARN: ""
+    gcp:
+      # -- Service Account email to bind to the k8s service account
+      serviceAccount: ""
