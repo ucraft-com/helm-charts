@@ -1,0 +1,70 @@
+{{- if .Values.migration.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "ucraft-base-helm.fullname" . }}-migrate
+  labels:
+    {{- include "ucraft-base-helm.labels" . | nindent 4 }}
+  {{- with $annotations := merge .Values.migration.annotations .Values.podAnnotations }}
+  annotations:
+    {{- $annotations | toYaml | nindent 4 }}
+  {{- end }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "ucraft-base-helm.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: migration
+      {{- if .Values.migration.podAnnotations }}
+      annotations: {{- include "ucraft-base-helm.fullname" (dict "value" .Values.migration.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with .Values.migration.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
+      restartPolicy: "{{ .Values.migration.restartPolicy }}"
+      containers:
+        - name: "{{ include "ucraft-base-helm.fullname" . }}"
+          image: "{{ .Values.migration.image.repository }}:{{ .Values.migration.image.tag }}"
+          imagePullPolicy: {{ default "IfNotPresent" .Values.migration.image.pullPolicy }}
+
+          {{- if .Values.migration.config.command  }}
+          command:
+            {{- toYaml .Values.migration.config.command | nindent 14 }}
+          {{- end }}
+
+          {{- if .Values.migration.config.args  }}
+          args:
+          {{- range $v := .Values.migration.config.args }}
+          - "{{ $v }}"
+          {{- end }}
+          {{- end }}
+
+          {{- if .Values.migration.config.env  }}
+          env:
+          {{- range $k, $v := .Values.migration.config.env }}
+          - name: "{{ $k }}"
+            value: "{{ $v }}"
+          {{- end }}
+          {{- end }}
+          
+          {{- if .Values.migration.config.secrets  }}
+          envFrom:
+          - secretRef:
+              name: {{ .Release.Name }}-migration-secret
+          {{- end }}
+
+
+          {{- if .Values.migration.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.migration.extraVolumeMounts| nindent 12 }}
+          {{- end }}
+          {{- if .Values.migration.resources }}
+          resources: {{- toYaml .Values.migration.resources | nindent 12 }}
+          {{- end }}
+      {{- if .Values.migration.extraVolumes }}
+      volumes:
+      {{- toYaml .Values.migration.extraVolumes | nindent 6 }}
+      {{- end }}
+{{- end }}
