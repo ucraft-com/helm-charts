@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "laravel.fullname" . }}
+  name: {{ include "ucraft-base-helm.fullname" . }}
 spec:
   schedule: "{{ .Values.cronjob.schedule }}"
   concurrencyPolicy: "{{ .Values.cronjob.concurrencyPolicy }}"
@@ -14,7 +14,7 @@ spec:
       template:
         metadata:
           labels:
-            app: {{ include "laravel.fullname" . }}
+            app: {{ include "ucraft-base-helm.fullname" . }}
           annotations:
             {{- if .Values.cronjob.configMaps }}
             {{- range $v := .Values.cronjob.configMaps }}
@@ -54,7 +54,7 @@ spec:
             {{- toYaml . | nindent 8 }}
           {{- end }}
           containers:
-          - name: "{{ include "laravel.fullname" . }}"
+          - name: "{{ include "ucraft-base-helm.fullname" . }}"
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag }}"
             imagePullPolicy: {{ default "IfNotPresent" .Values.cronjob.image.pullPolicy }}
 
