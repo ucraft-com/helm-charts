@@ -366,6 +366,7 @@ migration:
   ##   tag:
   ##   digest: ""
   ##
+  nodeSelector: {}
   config:
     command: []
     #  - "/bin/sh"
