@@ -70,12 +70,9 @@ spec:
             {{- end }}
             {{- end }}
 
-            {{- if .Values.cronjob.config.env  }}
+            {{- with .Values.cronjob.extraEnv }}
             env:
-            {{- range $k, $v := .Values.cronjob.config.env }}
-            - name: "{{ $k }}"
-              value: "{{ $v }}"
-            {{- end }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
             
             {{- if .Values.cronjob.config.secrets  }}
