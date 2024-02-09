@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "karrio.fullname" . }}-api
+data:
+  {{- toYaml .Values.api.config | nindent 2 }}

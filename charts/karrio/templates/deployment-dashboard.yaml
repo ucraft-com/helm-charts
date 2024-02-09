@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "karrio.fullname" . }}-dashboard
+  labels:
+    {{- include "karrio.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.dashboard.minReadySeconds }}
+  minReadySeconds: {{ .Values.dashboard.minReadySeconds }}
+  {{- end }}
+  {{- if .Values.dashboard.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.dashboard.revisionHistoryLimit }}
+  {{- end }}
+  {{- if not .Values.dashboard.autoscaling.enabled }}
+  replicas: {{ .Values.dashboard.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "karrio.selectorLabels" . | nindent 6 }}
+  {{- if .Values.dashboard.strategy }}
+  strategy:
+    {{- toYaml .Values.dashboard.strategy | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      annotations:
+        configmap: {{ .Values.dashboard.config | toYaml | sha256sum | trunc 10 }}
+      {{- with .Values.dashboard.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "karrio.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.dashboard.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "karrio.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.dashboard.podSecurityContext | nindent 8 }}
+      {{- if .Values.dashboard.initContainers }}
+      initContainers:
+        {{- toYaml .Values.dashboard.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-dashboard
+          securityContext:
+            {{- toYaml .Values.dashboard.securityContext | nindent 12 }}
+          image: "{{ .Values.dashboard.image.repository }}:{{ .Values.dashboard.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.dashboard.image.pullPolicy }}
+          {{- if .Values.dashboard.command }}
+          command: 
+            {{- toYaml .Values.dashboard.command | nindent 12 }}
+          {{- end }}
+          {{- if .Values.dashboard.extraEnv }}
+          env:
+            {{- range $key, $value := .Values.dashboard.extraEnv }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.dashboard.containerPort | default 80 }}
+              protocol: TCP
+          {{- if .Values.dashboard.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.dashboard.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.dashboard.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.dashboard.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "karrio.fullname" . }}-dashboard
+            - secretRef:
+                name: {{ include "karrio.fullname" . }}-dashboard
+                optional: true
+          volumeMounts:
+            {{- with .Values.dashboard.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      volumes:
+        {{- with .Values.dashboard.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.dashboard.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dashboard.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+

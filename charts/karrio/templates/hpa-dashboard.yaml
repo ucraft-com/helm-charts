@@ -1,0 +1,39 @@
+{{- if .Values.dashboard.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "karrio.fullname" . }}-dashboard
+  labels:
+    {{- include "karrio.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "karrio.fullname" . }}-dashboard
+  minReplicas: {{ .Values.dashboard.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.dashboard.autoscaling.maxReplicas }}
+  {{- with .Values.dashboard.autoscaling.behavior }}
+  behavior:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  metrics:
+    {{- if .Values.dashboard.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.dashboard.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.dashboard.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.dashboard.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+    {{- with .Values.dashboard.autoscaling.customMetrics }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+{{- end }}

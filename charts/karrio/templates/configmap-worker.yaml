@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "karrio.fullname" . }}-worker
+data:
+  {{- toYaml .Values.worker.config | nindent 2 }}

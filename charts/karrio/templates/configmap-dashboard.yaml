@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "karrio.fullname" . }}-dashboard
+data:
+  {{- toYaml .Values.dashboard.config | nindent 2 }}

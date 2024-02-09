@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "karrio.fullname" . }}-worker
+  labels:
+    {{- include "karrio.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.worker.minReadySeconds }}
+  minReadySeconds: {{ .Values.worker.minReadySeconds }}
+  {{- end }}
+  {{- if .Values.worker.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.worker.revisionHistoryLimit }}
+  {{- end }}
+  {{- if not .Values.worker.autoscaling.enabled }}
+  replicas: {{ .Values.worker.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "karrio.selectorLabels" . | nindent 6 }}
+  {{- if .Values.worker.strategy }}
+  strategy:
+    {{- toYaml .Values.worker.strategy | nindent 4 }}
+  {{- end }}
+  template:
+    metadata:
+      annotations:
+        configmap: {{ .Values.worker.config | toYaml | sha256sum | trunc 10 }}
+      {{- with .Values.worker.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "karrio.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.worker.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "karrio.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.worker.podSecurityContext | nindent 8 }}
+      {{- if .Values.worker.initContainers }}
+      initContainers:
+        {{- toYaml .Values.worker.initContainers | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-worker
+          securityContext:
+            {{- toYaml .Values.worker.securityContext | nindent 12 }}
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          {{- if .Values.worker.command }}
+          command: 
+            {{- toYaml .Values.worker.command | nindent 12 }}
+          {{- end }}
+          {{- if .Values.worker.extraEnv }}
+          env:
+            {{- range $key, $value := .Values.worker.extraEnv }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.worker.containerPort | default 80 }}
+              protocol: TCP
+          {{- if .Values.worker.livenessProbe }}
+          livenessProbe:
+            {{- toYaml .Values.worker.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.worker.readinessProbe }}
+          readinessProbe:
+            {{- toYaml .Values.worker.readinessProbe | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "karrio.fullname" . }}-worker
+            - secretRef:
+                name: {{ include "karrio.fullname" . }}-worker
+                optional: true
+          volumeMounts:
+            {{- with .Values.worker.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      volumes:
+        {{- with .Values.worker.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+

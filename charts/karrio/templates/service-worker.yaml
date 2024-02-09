@@ -1,0 +1,17 @@
+{{- if .Values.worker.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "karrio.fullname" . }}-worker
+  labels:
+    {{- include "karrio.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.worker.service.type }}
+  ports:
+    - port: {{ .Values.worker.service.port }}
+      targetPort: {{ .Values.worker.containerPort }}
+      protocol: {{ .Values.worker.service.protocol }}
+      name: {{ .Values.worker.service.name }}
+  selector:
+    {{- include "karrio.selectorLabels" . | nindent 4 }}
+{{- end }}
