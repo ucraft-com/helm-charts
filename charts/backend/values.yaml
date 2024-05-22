@@ -118,13 +118,21 @@ service:
   annotations: {}
 
 ingress:
-  enabled: true
+  enabled: false
   annotations: {}
-  hosts:
-    - host: sso.dev.ucraft.ai
-      paths:
-        - /
+  class: "" # Set your ingress class here
+  clusterIssuer: ""  # Set your cluster-issuer here
   tls: []
+  hosts:
+    - host: host1.example.com
+      paths:
+        - path: /path1
+          servicePort: 8080
+          pathType: Prefix
+        - path: /path2
+    - host: host2.example.com
+      paths:
+        - path: /
 
 autoscaling:
   enabled: false

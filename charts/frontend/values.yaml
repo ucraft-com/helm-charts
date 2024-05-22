@@ -36,18 +36,19 @@ service:
 ingress:
   enabled: false
   annotations: {}
-  hosts:
-    - host: host.name.com
-      paths:
-      - path: /*
-        backend:
-          serviceName: ssl-redirect
-          servicePort: use-annotation
-      - backend:
-          serviceName: uc-application
-          servicePort: 80
-        path: /*
+  class: "" # Set your ingress class here
+  clusterIssuer: ""  # Set your cluster-issuer here
   tls: []
+  hosts:
+    - host: host1.example.com
+      paths:
+        - path: /path1
+          servicePort: 8080
+          pathType: Prefix
+        - path: /path2
+    - host: host2.example.com
+      paths:
+        - path: /
 
 resources: {}
 autoscaling:
