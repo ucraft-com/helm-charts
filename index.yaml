@@ -3,6 +3,16 @@ entries:
   backend:
   - apiVersion: v2
     appVersion: 1.3.0
+    created: "2024-05-22T14:26:34.219244325Z"
+    description: Helm chart scaffolding for Backend applications.
+    digest: 872e42528fe9d79c3c7aaed863849993beefdb9c3509c9eb76e996381f1d850d
+    name: backend
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/backend-3.6.9/backend-3.6.9.tgz
+    version: 3.6.9
+  - apiVersion: v2
+    appVersion: 1.3.0
     created: "2023-10-11T09:17:28.881441268Z"
     description: Helm chart scaffolding for Backend applications.
     digest: 799623ebc2883975921f6a65c362e81a16050fcc877c64bb91aaca6143800fe1
@@ -450,6 +460,16 @@ entries:
   frontend:
   - apiVersion: v2
     appVersion: 0.3.10
+    created: "2024-05-22T14:26:34.403129491Z"
+    description: A frontend Helm chart for Kubernetes
+    digest: 4bacfcb0298fc83c355d0c8b74222bd8930ab3cbbdd682d058026658c861db5f
+    name: frontend
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/frontend-3.6.9/frontend-3.6.9.tgz
+    version: 3.6.9
+  - apiVersion: v2
+    appVersion: 0.3.10
     created: "2023-10-11T09:17:29.051790591Z"
     description: A frontend Helm chart for Kubernetes
     digest: bda0cf7cf7aec753d8594a397eaee6752e04ff4c61dea30ee6b65fe5ee27a3a5
@@ -798,6 +818,28 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/frontend-1.3.4/frontend-1.3.4.tgz
     version: 1.3.4
+  karrio:
+  - apiVersion: v2
+    appVersion: 2024.2.rc4
+    created: "2024-05-22T14:26:34.633827179Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 18.12.1
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 14.0.4
+    description: A karrio Helm chart for Kubernetes
+    digest: 145fde9b29917ae2c548c654224b5c5e0b6692e6391ea14e59136818dd08388d
+    maintainers:
+    - name: Mher Poghosyan
+    name: karrio
+    type: application
+    urls:
+    - https://github.com/ucraft-com/helm-charts/releases/download/karrio-0.1.0/karrio-0.1.0.tgz
+    version: 0.1.0
   laravel-ucraft-backend:
   - apiVersion: v2
     appVersion: 0.3.0
@@ -875,4 +917,4 @@ entries:
     urls:
     - https://github.com/ucraft-com/helm-charts/releases/download/ucraft-base-helm-0.1.12/ucraft-base-helm-0.1.12.tgz
     version: 0.1.12
-generated: "2023-10-11T09:17:29.052595702Z"
+generated: "2024-05-22T14:26:34.634252812Z"
