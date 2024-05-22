@@ -128,7 +128,7 @@ ingress:
       paths:
         - path: /path1
           servicePort: 8080
-          pathType: Prefix
+          pathType: ImplementationSpecific
         - path: /path2
     - host: host2.example.com
       paths:
