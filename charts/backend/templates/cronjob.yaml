@@ -51,7 +51,7 @@ spec:
           {{- end }}
           {{- with .Values.cronjob.nodeSelector }}
           nodeSelector:
-            {{- toYaml . | nindent 8 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           containers:
           - name: "{{ include "laravel.fullname" . }}"
@@ -72,7 +72,7 @@ spec:
 
             {{- with .Values.cronjob.extraEnv }}
             env:
-              {{- toYaml . | nindent 12 }}
+              {{- toYaml . | nindent 14 }}
             {{- end }}
             
             {{- if .Values.cronjob.config.secrets  }}
