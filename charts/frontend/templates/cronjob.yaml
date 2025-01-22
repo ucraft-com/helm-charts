@@ -74,7 +74,9 @@ spec:
             env:
               {{- toYaml . | nindent 14 }}
             {{- end }}
-            
+            {{- if .Values.cronjob.PriorityClass }}
+            priorityClassName: {{ .Values.cronjob.PriorityClass }}
+            {{- end }}
             {{- if .Values.cronjob.config.secrets  }}
             envFrom:
             - secretRef:

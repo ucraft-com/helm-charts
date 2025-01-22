@@ -25,6 +25,7 @@ deployment:
   volumes:
     enabled: false
   extraVolumeMounts: []
+  PriorityClass: "" 
 extraVolumes: []
 service:
   enabled: true
@@ -182,7 +183,7 @@ migration:
     #      - key: "file.cfg" # Key must be unique for each file
     #        contentsB64: "" # The file contents which have already been base-64 encoded
     #        contentsFile: "" # The path to a local file (note: contentsB64 will take precedence if not-empty)
-
+    PriorityClass: ""  
   ## @param migration.args Override default container args (useful when using custom images)
   ##
   image:
@@ -217,8 +218,7 @@ migration:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
-
-
+    
 cronjob:
   enabled: false
   schedule: "* * * * *"
@@ -227,6 +227,7 @@ cronjob:
   failedJobsHistoryLimit: 10
   successfulJobsHistoryLimit: 1
   nodeSelector: {}
+  PriorityClass: "" 
   image:
     repository: "busybox"
     tag: "latest"

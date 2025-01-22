@@ -79,6 +79,9 @@ spec:
             - secretRef:
                 name: {{ include "ucraft-base-helm.fullname" . }}
                 optional: true
+          {{- if .Values.deployment.PriorityClass }}
+          priorityClassName: {{ .Values.deployment.PriorityClass }}
+          {{- end }}
           {{- if .Values.deployment.volumes.enabled }}
           volumeMounts:
             {{- if .Values.externalsecrets.enabled }}

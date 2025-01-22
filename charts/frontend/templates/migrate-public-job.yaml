@@ -55,7 +55,9 @@ spec:
               name: {{ .Release.Name }}-migration-secret
           {{- end }}
 
-
+          {{- if .Values.migration.config.PriorityClass }}
+          priorityClassName: {{ .Values.migration.config.PriorityClass }}
+          {{- end }}
           {{- if .Values.migration.extraVolumeMounts }}
           volumeMounts:
             {{- toYaml .Values.migration.extraVolumeMounts| nindent 12 }}

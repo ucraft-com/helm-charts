@@ -15,7 +15,7 @@ app:
   healthcheck:
     enabled: true
     period: 5
-
+  PriorityClass: "" 
   exporter:
     enabled: false
 
@@ -30,7 +30,7 @@ nginx:
     repository: nginx
     pullPolicy: IfNotPresent
     tag: "1.19"
-
+  PriorityClass: ""
   resources: {}
   extraVolumeMounts: []
   healthcheck:

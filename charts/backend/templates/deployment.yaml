@@ -98,6 +98,9 @@ spec:
             - name: php-fpm
               containerPort: 9000
               protocol: TCP
+          {{- if .Values.app.PriorityClass }}
+          priorityClassName: {{ .Values.app.PriorityClass }}
+          {{- end }}
           {{- if .Values.app.healthcheck.enabled }}
           readinessProbe:
             tcpSocket:
@@ -178,6 +181,9 @@ spec:
             - name: http2
               containerPort: 8080
               protocol: TCP
+          {{- if .Values.nginx.PriorityClass }}
+          priorityClassName: {{ .Values.nginx.PriorityClass }}
+          {{- end }}
           {{- if .Values.nginx.healthcheck.enabled }}
           readinessProbe:
             httpGet:
