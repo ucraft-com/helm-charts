@@ -163,12 +163,12 @@ spec:
         {{- end }}
         {{- if .Values.cloudsqlProxy.enabled }}
         - name: cloud-sql-proxy
-          image: "gcr.io/cloudsql-docker/gce-proxy:1.37.6"
+          image: "gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.15.2"
           imagePullPolicy: IfNotPresent
           command:
-            - "/cloud_sql_proxy"
-            - "{{- if .Values.cloudsqlProxy.instance1.enabled }}-instances={{ .Values.cloudsqlProxy.instance1.projectID }}:{{ .Values.cloudsqlProxy.instance1.region }}:{{ .Values.cloudsqlProxy.instance1.instanceID }}=tcp:127.0.0.1:{{ .Values.cloudsqlProxy.instance1.port }}{{- end }}"
-            - "{{- if .Values.cloudsqlProxy.instance2.enabled }}-instances={{ .Values.cloudsqlProxy.instance2.projectID }}:{{ .Values.cloudsqlProxy.instance2.region }}:{{ .Values.cloudsqlProxy.instance2.instanceID }}=tcp:127.0.0.2:{{ .Values.cloudsqlProxy.instance2.port }}{{- end }}"
+            - "/cloud-sql-proxy"
+            - "{{- if .Values.cloudsqlProxy.instance1.enabled }}{{ .Values.cloudsqlProxy.instance1.connetionLink }}{{- end }}"
+            - "{{- if .Values.cloudsqlProxy.instance2.enabled }}{{ .Values.cloudsqlProxy.instance2.connetionLink }}{{- end }}"
             - "-credential_file=/secrets/cloudsql/key.json"
           volumeMounts:
             - name: cloudsql-instance-credentials
