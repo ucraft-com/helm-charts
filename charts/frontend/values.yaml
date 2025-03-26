@@ -129,11 +129,22 @@ externalsecrets: {}
 
 cloudsqlProxy:
   enabled: false
-  projectID: "your-project-id"
-  region: "your-region"
-  instanceID: "your-instance-id"
   port: 5432
   credentialsSecret: "cloudsql-instance-credentials"
+
+  instance1:
+    projectID: "your-project-id1"
+    region: "your-region1"
+    instanceID: "your-instance-id1"
+    port: 5432
+    enabled: false
+
+  instance2:
+    projectID: "your-project-id2"
+    region: "your-region2"
+    instanceID: "your-instance-id2"
+    port: 5432
+    enabled: false
 secretenv:
   enabled: false
   env: |
