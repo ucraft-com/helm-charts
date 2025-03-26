@@ -161,8 +161,28 @@ spec:
           resources:
             {{- toYaml .Values.nginx.exporter.resources | nindent 12 }}
         {{- end }}
+        {{- if .Values.cloudsqlProxy.enabled }}
+        - name: cloud-sql-proxy
+          image: "gcr.io/cloudsql-docker/gce-proxy:1.37.6"
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/cloud_sql_proxy"
+            - "-instances={{ .Values.cloudsqlProxy.projectID }}:{{ .Values.cloudsqlProxy.region }}:{{ .Values.cloudsqlProxy.instanceID }}=tcp:{{ .Values.cloudsqlProxy.port }}"
+            - "-credential_file=/secrets/cloudsql/key.json"
+          volumeMounts:
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+          resources:
+            {{- toYaml .Values.cloudsqlProxy.resources | nindent 13 }}
+        {{- end }}
       {{- if .Values.deployment.volumes.enabled }}
       volumes:
+        {{- if .Values.cloudsqlProxy.enabled }}
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: {{ .Values.cloudsqlProxy.credentialsSecret }}
+        {{- end }}
         {{- if .Values.nginx.enabled }}
         - name: nginx-config
           configMap:

@@ -127,6 +127,13 @@ envSecretName: {}
 
 externalsecrets: {}
 
+cloudsqlProxy:
+  enabled: false
+  projectID: "your-project-id"
+  region: "your-region"
+  instanceID: "your-instance-id"
+  port: 5432
+  credentialsSecret: "cloudsql-instance-credentials"
 secretenv:
   enabled: false
   env: |
