@@ -183,7 +183,7 @@ spec:
         {{- end }}
       {{- if .Values.deployment.volumes.enabled }}
       volumes:
-        {{- if .Values.cloudsqlProxy.enabled }}
+        {{- if or .Values.cloudsqlProxy.instance1.enabled .Values.cloudsqlProxy.instance2.enabled }}
         - name: cloudsql-instance-credentials
           secret:
             secretName: {{ .Values.cloudsqlProxy.credentialsSecret }}
