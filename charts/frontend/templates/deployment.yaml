@@ -161,14 +161,18 @@ spec:
           resources:
             {{- toYaml .Values.nginx.exporter.resources | nindent 12 }}
         {{- end }}
-        {{- if .Values.cloudsqlProxy.enabled }}
+        {{- if or .Values.cloudsqlProxy.instance1.enabled .Values.cloudsqlProxy.instance2.enabled }}
         - name: cloud-sql-proxy
           image: "gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.15.2"
           imagePullPolicy: IfNotPresent
           command:
             - "/cloud-sql-proxy"
-            - "{{- if .Values.cloudsqlProxy.instance1.enabled }}{{ .Values.cloudsqlProxy.instance1.connetionLink }}{{- end }}"
-            - "{{- if .Values.cloudsqlProxy.instance2.enabled }}{{ .Values.cloudsqlProxy.instance2.connetionLink }}{{- end }}"
+            {{- if .Values.cloudsqlProxy.instance1.enabled }}
+            - "{{ .Values.cloudsqlProxy.instance1.connetionLink }}"
+            {{- end }}
+            {{- if .Values.cloudsqlProxy.instance2.enabled }}
+            - "{{ .Values.cloudsqlProxy.instance2.connetionLink }}"
+            {{- end }}
             - "--credentials-file=/secrets/cloudsql/key.json"
           volumeMounts:
             - name: cloudsql-instance-credentials

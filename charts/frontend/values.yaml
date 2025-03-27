@@ -128,13 +128,10 @@ envSecretName: {}
 externalsecrets: {}
 
 cloudsqlProxy:
-  enabled: false
   credentialsSecret: "cloudsql-instance-credentials"
-
   instance1:
     connetionLink: "your-connetionLink"
     enabled: false
-
   instance2:
     connetionLink: "your-connetionLink"
     enabled: false
