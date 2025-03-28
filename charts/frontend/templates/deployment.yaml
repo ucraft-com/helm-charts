@@ -31,6 +31,9 @@ spec:
       labels:
         {{- include "ucraft-base-helm.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if hasKey .Values "shareProcessNamespace" }}
+      shareProcessNamespace: {{ .Values.shareProcessNamespace }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -166,14 +169,22 @@ spec:
           image: "gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.15.2"
           imagePullPolicy: IfNotPresent
           command:
-            - "/cloud-sql-proxy"
-            {{- if .Values.cloudsqlProxy.instance1.enabled }}
-            - "{{ .Values.cloudsqlProxy.instance1.connetionLink }}"
-            {{- end }}
-            {{- if .Values.cloudsqlProxy.instance2.enabled }}
-            - "{{ .Values.cloudsqlProxy.instance2.connetionLink }}"
-            {{- end }}
-            - "--credentials-file=/secrets/cloudsql/key.json"
+            - /bin/sh
+            - -c
+            - |
+              /cloud-sql-proxy \
+              {{- if .Values.cloudsqlProxy.instance1.enabled }}
+                {{ .Values.cloudsqlProxy.instance1.connetionLink }} \
+              {{- end }}
+              {{- if .Values.cloudsqlProxy.instance2.enabled }}
+                {{ .Values.cloudsqlProxy.instance2.connetionLink }} \
+              {{- end }}
+              --credentials-file=/secrets/cloudsql/key.json &
+
+              PROXY_PID=$!
+              while kill -0 1 2>/dev/null; do sleep 1; done
+              echo "Main container exited, shutting down proxy..."
+              kill $PROXY_PID
           volumeMounts:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
