@@ -166,25 +166,16 @@ spec:
         {{- end }}
         {{- if or .Values.cloudsqlProxy.instance1.enabled .Values.cloudsqlProxy.instance2.enabled }}
         - name: cloud-sql-proxy
-          image: "gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.15.2"
+          image: "europe-west1-docker.pkg.dev/uc-next/devops-tools/cloud-sql-proxy:2.15.2"
           imagePullPolicy: IfNotPresent
-          command:
-            - /bin/sh
-            - -c
-            - |
-              /cloud-sql-proxy \
-              {{- if .Values.cloudsqlProxy.instance1.enabled }}
-                {{ .Values.cloudsqlProxy.instance1.connetionLink }} \
-              {{- end }}
-              {{- if .Values.cloudsqlProxy.instance2.enabled }}
-                {{ .Values.cloudsqlProxy.instance2.connetionLink }} \
-              {{- end }}
-              --credentials-file=/secrets/cloudsql/key.json &
-
-              PROXY_PID=$!
-              while kill -0 1 2>/dev/null; do sleep 1; done
-              echo "Main container exited, shutting down proxy..."
-              kill $PROXY_PID
+          command: ["/run.sh"]
+          args:
+            {{- if .Values.cloudsqlProxy.instance1.enabled }}
+            - "{{ .Values.cloudsqlProxy.instance1.connetionLink }}"
+            {{- end }}
+            {{- if .Values.cloudsqlProxy.instance2.enabled }}
+            - "{{ .Values.cloudsqlProxy.instance2.connetionLink }}"
+            {{- end }}
           volumeMounts:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
